@@ -35,3 +35,6 @@ function App() {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/verify-otp" element={<OTPVerify />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/event" element={<Event />} />
