@@ -116,3 +116,10 @@ export default function AdminSidebar({ user }) {
 
       <div className="hidden md:block md:w-[288px] md:shrink-0">
         <div className="sticky top-0 h-screen overflow-hidden p-4">{sidebarBody}</div>
+      </div>
+
+      <div
+        className={`fixed inset-y-0 left-0 z-50 w-[288px] max-w-[85vw] transform transition-transform duration-300 md:hidden ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
