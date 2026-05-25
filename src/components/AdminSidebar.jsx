@@ -111,3 +111,8 @@ export default function AdminSidebar({ user }) {
           className="fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-sm md:hidden"
           onClick={closeSidebar}
           aria-hidden="true"
+        />
+      )}
+
+      <div className="hidden md:block md:w-[288px] md:shrink-0">
+        <div className="sticky top-0 h-screen overflow-hidden p-4">{sidebarBody}</div>
