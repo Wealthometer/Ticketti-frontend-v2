@@ -74,3 +74,11 @@ const CreateTicketType = ({ eventId, onComplete }) => {
                 <div>
                     <label className="block text-sm font-medium mb-1">Description</label>
                     <textarea
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        className="w-full border rounded px-3 py-2"
+                        placeholder="Optional description for the ticket type"
+                        rows="3"
+                    />
+                </div>
