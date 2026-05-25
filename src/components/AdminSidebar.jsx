@@ -19,3 +19,14 @@ const menuItems = [
 export default function AdminSidebar({ user }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/signin");
+  };
+
+  const closeSidebar = () => setIsOpen(false);
+
+  const sidebarBody = (
