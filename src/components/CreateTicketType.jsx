@@ -53,3 +53,8 @@ const CreateTicketType = ({ eventId, onComplete }) => {
 
     return (
         <div className="bg-white p-6 rounded shadow mt-6">
+            <h3 className="text-xl font-bold mb-4">Add Ticket Type</h3>
+            {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{error}</div>}
+            {success && <div className="mb-4 p-3 bg-green-100 text-green-700 rounded">{success}</div>}
+
+            <form onSubmit={handleSubmit} className="space-y-4">
