@@ -11,3 +11,4 @@ const firebaseConfig = {
   apiKey: "AIzaSyAb_VOfvEeMLtO-2gsgEaXs1zEQpHnRp8s",
   authDomain: "sliver-32052.firebaseapp.com",
   projectId: "sliver-32052",
+  storageBucket: "sliver-32052.firebasestorage.app",
