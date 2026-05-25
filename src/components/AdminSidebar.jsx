@@ -51,3 +51,5 @@ export default function AdminSidebar({ user }) {
           <X className="h-4 w-4" />
         </button>
       </div>
+
+      <div className="border-b border-white/10 px-5 py-5">
