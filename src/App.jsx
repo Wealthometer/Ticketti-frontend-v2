@@ -52,3 +52,8 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/scanner" element={<TicketScanner />} />
+    </Router>
+  );
+}
+
+export default App;
