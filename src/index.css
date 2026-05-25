@@ -30,3 +30,13 @@ body {
   margin: 0;
   min-width: 320px;
   background:
+    radial-gradient(circle at top, rgba(59, 130, 246, 0.16), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(14, 165, 233, 0.14), transparent 18%),
+    linear-gradient(180deg, #08111f 0%, #0b1220 44%, #f4f7fb 44%, #eef3f9 100%);
+  color: var(--text);
+  font-family: "Manrope", sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
