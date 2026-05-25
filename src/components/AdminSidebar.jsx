@@ -38,3 +38,16 @@ export default function AdminSidebar({ user }) {
           </div>
           <div>
             <p className="font-display text-lg font-semibold tracking-tight">Admin Panel</p>
+            <p className="text-xs text-slate-400">Operations center</p>
+          </div>
+        </Link>
+
+        <button
+          type="button"
+          onClick={closeSidebar}
+          className="rounded-full border border-white/10 p-2 text-slate-300 transition hover:bg-white/5 md:hidden"
+          aria-label="Close admin menu"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
