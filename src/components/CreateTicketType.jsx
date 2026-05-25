@@ -66,3 +66,11 @@ const CreateTicketType = ({ eventId, onComplete }) => {
                         value={formData.name}
                         onChange={handleChange}
                         required
+                        className="w-full border rounded px-3 py-2"
+                        placeholder="e.g. VIP, Regular"
+                    />
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium mb-1">Description</label>
+                    <textarea
