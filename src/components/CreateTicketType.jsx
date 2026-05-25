@@ -101,3 +101,8 @@ const CreateTicketType = ({ eventId, onComplete }) => {
                         <input
                             type="number"
                             name="stock"
+                            value={formData.stock}
+                            onChange={handleChange}
+                            required
+                            min="1"
+                            className="w-full border rounded px-3 py-2"
