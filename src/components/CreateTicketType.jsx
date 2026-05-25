@@ -41,3 +41,8 @@ const CreateTicketType = ({ eventId, onComplete }) => {
             }
             const data = await createEventTicket(ticketData);
 
+            setSuccess("Ticket type created successfully!");
+            setFormData({ name: "", price: "", stock: "", description: "" });
+            if (onComplete) onComplete(data.ticket || data.ticket_type || data.data);
+        } catch (err) {
+            setError(err.message || "Failed to create ticket type");
