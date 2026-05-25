@@ -60,3 +60,12 @@ export default function AdminSidebar({ user }) {
         </div>
       </div>
 
+      <nav className="flex-1 space-y-2 overflow-y-auto px-4 py-5">
+        {menuItems.map(({ label, path, icon: Icon }) => {
+          const active = location.pathname === path;
+
+          return (
+            <Link
+              key={path}
+              to={path}
+              onClick={closeSidebar}
