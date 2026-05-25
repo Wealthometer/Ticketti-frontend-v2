@@ -32,3 +32,6 @@ function App() {
         {/* Public */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/verify-otp" element={<OTPVerify />} />
