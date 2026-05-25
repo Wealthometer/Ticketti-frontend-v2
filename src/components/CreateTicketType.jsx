@@ -18,3 +18,10 @@ const CreateTicketType = ({ eventId, onComplete }) => {
     };
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+        setSuccess("");
+        setLoading(true);
+
+        if (!eventId) {
+            setError("Event ID is missing. Please try creating the event again.");
