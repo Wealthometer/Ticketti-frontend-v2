@@ -12,3 +12,4 @@ const firebaseConfig = {
   authDomain: "sliver-32052.firebaseapp.com",
   projectId: "sliver-32052",
   storageBucket: "sliver-32052.firebasestorage.app",
+  messagingSenderId: "925327504976",
