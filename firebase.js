@@ -10,3 +10,4 @@ import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyAb_VOfvEeMLtO-2gsgEaXs1zEQpHnRp8s",
   authDomain: "sliver-32052.firebaseapp.com",
+  projectId: "sliver-32052",
