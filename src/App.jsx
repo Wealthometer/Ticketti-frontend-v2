@@ -25,3 +25,6 @@ import AdminDashboard from "./pages/AdminDashboard.jsx";
 import AdminUsers from "./pages/AdminUsers.jsx";
 import AdminEvents from "./pages/AdminEvents.jsx";
 
+function App() {
+  return (
+    <Router>
