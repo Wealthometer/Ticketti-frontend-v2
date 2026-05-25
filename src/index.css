@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&family=Syne:wght@400;700;800&display=swap");
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --bg: #07111f;
+  --bg-soft: #0c1729;
+  --panel: rgba(15, 23, 42, 0.72);
+  --panel-strong: rgba(10, 17, 31, 0.9);
+  --line: rgba(148, 163, 184, 0.16);
+  --text: #e5eefb;
+  --muted: #94a3b8;
+  --accent: #1d4ed8;
