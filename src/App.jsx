@@ -18,3 +18,6 @@ import CreateEvent from "./pages/CreateEvent.jsx";
 import MyTickets from "./pages/MyTickets.jsx";
 import Wallet from "./pages/Wallet.jsx";
 import Settings from "./pages/Settings.jsx";
+import Contact from "./pages/Contact.jsx";
+import PaymentSuccess from "./pages/PaymentSuccess.jsx";
+import TicketScanner from "./pages/TicketScanner.jsx";
