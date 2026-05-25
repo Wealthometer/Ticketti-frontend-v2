@@ -48,3 +48,10 @@ a {
 
 button,
 input,
+textarea,
+select {
+  font: inherit;
+}
+
+img {
+  max-width: 100%;
