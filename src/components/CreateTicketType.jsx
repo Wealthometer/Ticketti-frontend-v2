@@ -114,3 +114,12 @@ const CreateTicketType = ({ eventId, onComplete }) => {
                     type="submit"
                     disabled={loading}
                     className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 disabled:opacity-50 w-full"
+                >
+                    {loading ? "Creating..." : "Add Ticket Type"}
+                </button>
+            </form>
+        </div>
+    );
+};
+
+export default CreateTicketType;
