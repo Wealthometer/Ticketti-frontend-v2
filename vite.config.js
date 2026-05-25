@@ -8,3 +8,9 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://ticketii.com.ng/ticketii",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
+})
