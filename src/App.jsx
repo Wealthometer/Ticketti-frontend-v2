@@ -28,3 +28,7 @@ import AdminEvents from "./pages/AdminEvents.jsx";
 function App() {
   return (
     <Router>
+      <Routes>
+        {/* Public */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signin" element={<SignIn />} />
