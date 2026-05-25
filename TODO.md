@@ -1,0 +1,3 @@
+- [x] Comment out API endpoint in SignIn.jsx and implement mock login
+- [x] Comment out API endpoint in SignUp.jsx and implement mock signup
+- [x] Test the changes by running the app
