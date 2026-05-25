@@ -53,3 +53,4 @@ export default function AdminSidebar({ user }) {
       </div>
 
       <div className="border-b border-white/10 px-5 py-5">
+        <div className="app-panel rounded-3xl px-4 py-4">
