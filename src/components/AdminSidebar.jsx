@@ -54,3 +54,9 @@ export default function AdminSidebar({ user }) {
 
       <div className="border-b border-white/10 px-5 py-5">
         <div className="app-panel rounded-3xl px-4 py-4">
+          <p className="text-xs uppercase tracking-[0.28em] text-slate-500">Signed in as</p>
+          <p className="mt-2 truncate text-sm font-semibold text-white">{user?.name || "Administrator"}</p>
+          <p className="truncate text-xs text-slate-400">{user?.email || "Admin account"}</p>
+        </div>
+      </div>
+
