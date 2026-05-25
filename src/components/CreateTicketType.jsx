@@ -58,3 +58,11 @@ const CreateTicketType = ({ eventId, onComplete }) => {
             {success && <div className="mb-4 p-3 bg-green-100 text-green-700 rounded">{success}</div>}
 
             <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                    <label className="block text-sm font-medium mb-1">Ticket Name *</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
