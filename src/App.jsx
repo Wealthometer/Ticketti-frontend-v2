@@ -14,3 +14,7 @@ import LandingPage from "./pages/LandingPage.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Event from "./pages/Event.jsx";
 import EventDetails from "./pages/EventDetails.jsx";
+import CreateEvent from "./pages/CreateEvent.jsx";
+import MyTickets from "./pages/MyTickets.jsx";
+import Wallet from "./pages/Wallet.jsx";
+import Settings from "./pages/Settings.jsx";
