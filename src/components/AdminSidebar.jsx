@@ -123,3 +123,8 @@ export default function AdminSidebar({ user }) {
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
+        {sidebarBody}
+      </div>
+    </>
+  );
+}
