@@ -34,3 +34,10 @@ const CreateTicketType = ({ eventId, onComplete }) => {
                 event_id: Number(eventId),
                 name: formData.name,
                 price: Number(formData.price),
+                stock: Number(formData.stock),
+            };
+            if (formData.description.trim()) {
+                ticketData.description = formData.description;
+            }
+            const data = await createEventTicket(ticketData);
+
