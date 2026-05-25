@@ -49,3 +49,6 @@ function App() {
         <Route path="/create-event" element={<CreateEvent />} />
         <Route path="/my-tickets" element={<MyTickets />} />
         <Route path="/wallet" element={<Wallet />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/scanner" element={<TicketScanner />} />
