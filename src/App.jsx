@@ -10,3 +10,7 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 
 // Main pages
+import LandingPage from "./pages/LandingPage.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Event from "./pages/Event.jsx";
+import EventDetails from "./pages/EventDetails.jsx";
