@@ -99,3 +99,9 @@ export default function AdminSidebar({ user }) {
     <>
       <button
         type="button"
+        onClick={() => setIsOpen(true)}
+        className="fixed right-4 top-4 z-50 rounded-2xl border border-white/10 bg-slate-950/90 p-3 text-white shadow-xl shadow-slate-950/40 backdrop-blur md:hidden"
+        aria-label="Open admin menu"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
