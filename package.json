@@ -30,3 +30,5 @@
     "framer-motion": "^12.26.2",
     "lucide-react": "^0.552.0",
     "react-router-dom": "^7.9.5"
+  }
+}
