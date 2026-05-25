@@ -62,3 +62,8 @@ img {
   min-height: 100vh;
 }
 
+  background: rgba(96, 165, 250, 0.25);
+  color: white;
+}
+
+.font-display {
