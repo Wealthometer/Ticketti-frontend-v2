@@ -25,3 +25,12 @@ const CreateTicketType = ({ eventId, onComplete }) => {
 
         if (!eventId) {
             setError("Event ID is missing. Please try creating the event again.");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const ticketData = {
+                event_id: Number(eventId),
+                name: formData.name,
+                price: Number(formData.price),
