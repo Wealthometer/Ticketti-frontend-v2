@@ -74,3 +74,10 @@ export default function AdminSidebar({ user }) {
                   ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-blue-950/30"
                   : "text-slate-300 hover:bg-white/5 hover:text-white"
               }`}
+            >
+              <Icon className={`h-4 w-4 ${active ? "text-white" : "text-slate-400 group-hover:text-cyan-300"}`} />
+              <span>{label}</span>
+            </Link>
+          );
+        })}
+      </nav>
