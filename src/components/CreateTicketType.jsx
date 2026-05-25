@@ -106,3 +106,11 @@ const CreateTicketType = ({ eventId, onComplete }) => {
                             required
                             min="1"
                             className="w-full border rounded px-3 py-2"
+                        />
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 disabled:opacity-50 w-full"
