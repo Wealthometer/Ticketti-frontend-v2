@@ -105,3 +105,9 @@ export default function AdminSidebar({ user }) {
       >
         <Menu className="h-5 w-5" />
       </button>
+
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-sm md:hidden"
+          onClick={closeSidebar}
+          aria-hidden="true"
