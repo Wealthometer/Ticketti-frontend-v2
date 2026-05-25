@@ -6,3 +6,4 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
+        target: "https://ticketii.com.ng/ticketii",
