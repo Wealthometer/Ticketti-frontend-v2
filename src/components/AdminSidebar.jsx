@@ -69,3 +69,8 @@ export default function AdminSidebar({ user }) {
               key={path}
               to={path}
               onClick={closeSidebar}
+              className={`group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition ${
+                active
+                  ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-blue-950/30"
+                  : "text-slate-300 hover:bg-white/5 hover:text-white"
+              }`}
