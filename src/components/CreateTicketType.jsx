@@ -46,3 +46,10 @@ const CreateTicketType = ({ eventId, onComplete }) => {
             if (onComplete) onComplete(data.ticket || data.ticket_type || data.data);
         } catch (err) {
             setError(err.message || "Failed to create ticket type");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="bg-white p-6 rounded shadow mt-6">
