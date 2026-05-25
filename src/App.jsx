@@ -21,3 +21,7 @@ import Settings from "./pages/Settings.jsx";
 import Contact from "./pages/Contact.jsx";
 import PaymentSuccess from "./pages/PaymentSuccess.jsx";
 import TicketScanner from "./pages/TicketScanner.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
+import AdminUsers from "./pages/AdminUsers.jsx";
+import AdminEvents from "./pages/AdminEvents.jsx";
+
