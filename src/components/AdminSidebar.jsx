@@ -81,3 +81,9 @@ export default function AdminSidebar({ user }) {
           );
         })}
       </nav>
+
+      <div className="border-t border-white/10 p-4">
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="flex w-full items-center gap-3 rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200 transition hover:bg-red-500/15"
