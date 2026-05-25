@@ -11,3 +11,4 @@ export default defineConfig([
     extends: [
       js.configs.recommended,
       reactHooks.configs['recommended-latest'],
+      reactRefresh.configs.vite,
