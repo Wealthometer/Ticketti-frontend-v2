@@ -38,3 +38,6 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/event" element={<Event />} />
+        <Route path="/event/:eventId" element={<EventDetails />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+
