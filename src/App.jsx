@@ -41,3 +41,7 @@ function App() {
         <Route path="/event/:eventId" element={<EventDetails />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
 
+        {/* Protected (auth enforced inside each page) */}
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
