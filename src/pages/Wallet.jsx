@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { DollarSign, Ticket, Wallet as WalletIcon } from "lucide-react";
 import Sidebar from "../components/Sidebar.jsx";
 import { getOrganizerDashboard, requestWithdrawal } from "../services/api";
 
@@ -90,13 +91,15 @@ export default function Wallet() {
                 onClick={() => { setShowModal(true); setMsg({ type: "", text: "" }); }}
                 className="flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold rounded-xl transition"
               >
-                💸 Request Withdrawal
+                <DollarSign className="h-4 w-4" />
+                Request Withdrawal
               </button>
               <button
                 onClick={() => navigate("/event")}
                 className="flex items-center gap-2 px-5 py-2.5 bg-white/8 hover:bg-white/12 text-white text-sm font-medium rounded-xl transition border border-white/10"
               >
-                🎫 Browse Events
+                <Ticket className="h-4 w-4" />
+                Browse Events
               </button>
             </div>
           </div>
@@ -133,7 +136,9 @@ export default function Wallet() {
               </div>
             ) : (
               <div className="p-10 text-center">
-                <p className="text-4xl mb-3">💸</p>
+                <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-white/10 text-white">
+                  <WalletIcon className="h-8 w-8" />
+                </div>
                 <p className="text-white/30 text-sm">No payouts yet. Withdraw your earnings!</p>
               </div>
             )}
