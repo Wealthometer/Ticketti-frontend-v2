@@ -116,3 +116,7 @@ img {
     gap: 1.5rem;
   }
 }
+
+.text-slate-950 {
+  color: #0f172a;
+}
