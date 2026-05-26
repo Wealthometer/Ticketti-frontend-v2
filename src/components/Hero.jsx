@@ -32,7 +32,7 @@ export default function Hero() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               to="/event"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-200"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-slate-950 px-6 py-3 text-sm font-semibold text-black transition hover:bg-slate-200 hover:text-black"
             >
               Explore Events
               <ArrowRight className="h-4 w-4" />
