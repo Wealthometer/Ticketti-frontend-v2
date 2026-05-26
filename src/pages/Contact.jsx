@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Headphones, Mail, Phone, MapPin } from "lucide-react";
 import Sidebar from "../components/Sidebar.jsx";
 
 const Contact = () => {
@@ -56,13 +57,16 @@ const Contact = () => {
         </header>
 
         <div className="flex-1 p-4 md:p-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-6">
-            📞 Contact Support
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-6 flex items-center gap-3">
+            <Headphones className="h-6 w-6 text-indigo-600" />
+            Contact Support
           </h1>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
             <div className="bg-white rounded-lg shadow p-4 md:p-6 hover:shadow-lg transition">
-              <h3 className="text-2xl mb-2">📧</h3>
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 mb-4">
+                <Mail className="h-6 w-6" />
+              </div>
               <h4 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">
                 Email
               </h4>
@@ -71,7 +75,9 @@ const Contact = () => {
               </p>
             </div>
             <div className="bg-white rounded-lg shadow p-4 md:p-6 hover:shadow-lg transition">
-              <h3 className="text-2xl mb-2">📱</h3>
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 mb-4">
+                <Phone className="h-6 w-6" />
+              </div>
               <h4 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">
                 Phone
               </h4>
@@ -80,7 +86,9 @@ const Contact = () => {
               </p>
             </div>
             <div className="bg-white rounded-lg shadow p-4 md:p-6 hover:shadow-lg transition">
-              <h3 className="text-2xl mb-2">🏢</h3>
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 mb-4">
+                <MapPin className="h-6 w-6" />
+              </div>
               <h4 className="font-semibold text-gray-900 mb-2 text-sm md:text-base">
                 Office
               </h4>
