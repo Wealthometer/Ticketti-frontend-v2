@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { CalendarDays, MapPin, Ticket, Coins } from "lucide-react";
 import { createBooking, getEventDetails, getTicketTypes, initiatePayment } from "../services/api";
 
 const EventDetails = () => {
@@ -157,7 +158,7 @@ const EventDetails = () => {
         const callbackUrl =
           window.location.hostname === "localhost"
             ? "http://localhost:5173/payment-success"
-            : `${window.location.origin}/payment-success`;
+            : `${window.location.origin}${import.meta.env.BASE_URL}payment-success`;
         const paymentResponse = await initiatePayment(bookingId, callbackUrl);
 
         if (!paymentResponse.success) {
@@ -245,14 +246,22 @@ const EventDetails = () => {
                   Event Details
                 </h3>
                 <div className="space-y-2 text-gray-600">
-                  <p>
-                    📅 {event.date} at {event.time}
-                  </p>
-                  <p>📍 {event.location}</p>
-                  <p>💰 ₦{(event.ticketPrice || selectedTicketType?.price || 0).toLocaleString()} per ticket</p>
-                  <p>
-                    🎫 {(event.totalTickets || ticketTypes.reduce((sum, type) => sum + (type.stock || 0), 0)).toLocaleString()} tickets available
-                  </p>
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <CalendarDays className="h-4 w-4 text-indigo-500" />
+                    <span>{event.date} at {event.time}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <MapPin className="h-4 w-4 text-indigo-500" />
+                    <span>{event.location}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Coins className="h-4 w-4 text-indigo-500" />
+                    <span>₦{(event.ticketPrice || selectedTicketType?.price || 0).toLocaleString()} per ticket</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Ticket className="h-4 w-4 text-indigo-500" />
+                    <span>{(event.totalTickets || ticketTypes.reduce((sum, type) => sum + (type.stock || 0), 0)).toLocaleString()} tickets available</span>
+                  </div>
                 </div>
               </div>
 
@@ -276,36 +285,38 @@ const EventDetails = () => {
                 </div>
               )}
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="grid grid-cols-1 gap-6 mb-6 md:grid-cols-[1.4fr_0.6fr] items-start">
                 {!user && (
-                  <div className="md:col-span-2">
+                  <div className="md:col-span-2 space-y-4 min-w-0">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Email Address (for ticket delivery)
                     </label>
                     <input
                       type="email"
+                      autoComplete="email"
                       required
                       placeholder="your@email.com"
                       value={guestEmail}
                       onChange={(e) => setGuestEmail(e.target.value)}
-                      className="w-full px-3 py-2 mb-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full min-w-0 px-3 py-2 mb-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                     />
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Full Name
                     </label>
                     <input
                       type="text"
+                      autoComplete="name"
                       required
                       placeholder="John Doe"
                       value={guestName}
                       onChange={(e) => setGuestName(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full min-w-0 px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                     />
                   </div>
                 )}
 
                 {ticketTypes.length > 0 && (
-                  <div>
+                  <div className="min-w-0">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Ticket Type
                     </label>
@@ -316,7 +327,7 @@ const EventDetails = () => {
                         const type = ticketTypes.find((t) => String(t.id) === value);
                         setSelectedTicketType(type);
                       }}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                      className="w-full min-w-0 px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                     >
                       {ticketTypes.map(type => (
                         <option key={type.id} value={type.id}>
@@ -327,7 +338,7 @@ const EventDetails = () => {
                   </div>
                 )}
 
-                <div>
+                <div className="min-w-0">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Quantity {selectedTicketType && selectedTicketType.stock !== undefined && `(Available: ${selectedTicketType.stock})`}
                   </label>
@@ -337,21 +348,21 @@ const EventDetails = () => {
                     max={selectedTicketType?.stock || 100}
                     value={quantity}
                     onChange={(e) => {
-                      const val = parseInt(e.target.value) || 1;
+                      const val = parseInt(e.target.value, 10) || 1;
                       const max = selectedTicketType?.stock || 100;
                       setQuantity(Math.min(val, max));
                     }}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                    className="w-full min-w-0 px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </div>
 
-                <div className="flex flex-col">
-                  {selectedTicketType && (
+                <div className="min-w-0 rounded-2xl border border-gray-200 bg-slate-50 p-5">
+                  {selectedTicketType ? (
                     <>
                       <p className="text-lg font-semibold text-gray-900">
                         Subtotal: ₦{(selectedTicketType.price * quantity).toLocaleString()}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 mb-4">
                         Total (inc. fees): ₦{(
                           selectedTicketType.price * quantity +
                           0.05 * (selectedTicketType.price * quantity) +
@@ -359,6 +370,8 @@ const EventDetails = () => {
                         ).toLocaleString()}
                       </p>
                     </>
+                  ) : (
+                    <p className="text-sm text-gray-500 mb-4">Select a ticket type to see the total.</p>
                   )}
                   <button
                     onClick={handlePurchase}
