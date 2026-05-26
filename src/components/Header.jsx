@@ -39,15 +39,15 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <Link to="/" className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-lg shadow-slate-950/30">
-            <img src={logo} alt="Ticketii" className="h-10 w-auto object-contain" />
-          </div>
-          <div>
-            <p className="font-display text-lg font-semibold tracking-tight text-white">Ticketii</p>
-            <p className="text-xs text-slate-400">Modern event ticketing</p>
-          </div>
-        </Link>
+<Link to="/" className="flex items-center gap-4">
+            <div className="flex h-12 w-24 items-center justify-center overflow-hidden">
+              <img src={logo} alt="Ticketii" className="h-full w-auto object-contain" />
+            </div>
+            <div>
+              <p className="font-display text-lg font-semibold tracking-tight text-white">Ticketii</p>
+              <p className="text-xs text-slate-400">Modern event ticketing</p>
+            </div>
+          </Link>
 
         <div className="hidden items-center gap-8 md:flex">
           <nav className="flex items-center gap-7 text-sm text-slate-300">
