@@ -27,7 +27,7 @@ import AdminEvents from "./pages/AdminEvents.jsx";
 
 function App() {
   return (
-    <Router>
+    <Router basename={import.meta.env.BASE_URL}>
       <Routes>
         {/* Public */}
         <Route path="/" element={<LandingPage />} />
@@ -58,3 +58,4 @@ function App() {
 }
 
 export default App;
+  
