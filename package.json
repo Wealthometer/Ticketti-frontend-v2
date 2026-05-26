@@ -28,7 +28,7 @@
     "axios": "^1.13.2",
     "firebase": "^12.7.0",
     "framer-motion": "^12.26.2",
-    "lucide-react": "^0.552.0",
+    "lucide-react": "^1.16.0",
     "react-router-dom": "^7.9.5"
   }
 }
