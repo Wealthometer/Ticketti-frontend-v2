@@ -19,9 +19,9 @@ export default function Footer() {
     <footer className="bg-slate-950 px-4 py-16 text-slate-300 sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
-          <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5">
-              <img src={logo} alt="Ticketii" className="h-10 w-auto object-contain" />
+          <div className="flex items-center gap-4">
+            <div className="flex h-20 w-20 items-center justify-center overflow-hidden">
+              <img src={logo} alt="Ticketii" className="h-full w-auto object-contain" />
             </div>
             <div>
               <p className="font-display text-lg font-semibold text-white">Ticketii</p>
