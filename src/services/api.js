@@ -3,7 +3,7 @@
 // Base: https://ticketii.com.ng/ticketii/api
 // ============================================================
 
-const BASE_URL = "/api";
+const BASE_URL = "https://ticketii.com.ng/ticketii/api";
 
 const getToken = () => localStorage.getItem("token");
 
