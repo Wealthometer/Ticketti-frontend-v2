@@ -137,7 +137,11 @@ export default function CreateEvent() {
           )}
 
           {!createdEventId ? (
-            <form onSubmit={handleSubmit} className="app-panel mx-auto max-w-4xl rounded-[2rem] p-6 md:p-8">
+            <form
+              onSubmit={handleSubmit}
+              encType="multipart/form-data"
+              className="app-panel mx-auto max-w-4xl rounded-[2rem] p-6 md:p-8"
+            >
               <div className="grid gap-5 md:grid-cols-2">
                 <div className="md:col-span-2">
                   <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
