@@ -1,5 +1,5 @@
 import React from "react";
-import { Instagram, Mail, MapPin } from "lucide-react";
+import { Boxes, Mail, MapPin } from "lucide-react";
 import logo from "../assets/logo.png";
 
 const companyLinks = [
@@ -74,7 +74,7 @@ export default function Footer() {
               href="https://www.instagram.com/p/DTNTmvRDA5G/"
               className="mt-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-300 transition hover:text-white"
             >
-              <Instagram className="h-5 w-5" />
+              <Boxes className="h-5 w-5" />
             </a>
           </div>
         </div>
