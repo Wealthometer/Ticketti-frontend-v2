@@ -1,6 +1,77 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
+import { getEventImageUrl, getEventPlaceholderUrl } from "../utils/image.js";
+
+function EventCard({ event, index }) {
+  const navigate = useNavigate();
+  const [imageError, setImageError] = useState(false);
+
+  const resolvedImage = getEventImageUrl(
+    event.image || event.cover || event.banner || event.image_url
+  );
+
+  const displayImage = imageError ? null : resolvedImage;
+
+  return (
+    <article className="app-panel-light flex h-full flex-col overflow-hidden rounded-[1.75rem] transition duration-300 hover:-translate-y-1">
+      <div className="relative h-48 overflow-hidden bg-slate-950">
+        {displayImage ? (
+          <img
+            src={displayImage}
+            alt={event.title || event.eventName || "Event"}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+            onError={() => setImageError(true)}
+          />
+        ) : (
+          <img
+            src={getEventPlaceholderUrl(event.id || index)}
+            alt="Placeholder"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 hover:scale-105 opacity-60"
+          />
+        )}
+
+        {/* Dark contrast gradient overlay to ensure text is perfectly legible */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-black/35" />
+
+        {/* Content on top of background image */}
+        <div className="relative z-10 flex h-full flex-col justify-between p-5 text-white">
+          <span className="w-fit rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-sky-100 backdrop-blur-sm">
+            {event.status || "Active"}
+          </span>
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.28em] text-slate-300">Featured event</p>
+            <h3 className="font-display mt-2 text-xl font-bold leading-tight line-clamp-2">
+              {event.title || event.eventName || `Event ${index + 1}`}
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col p-5">
+        <div className="space-y-3 text-sm text-slate-600">
+          <p className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-blue-600" />
+            {event.location || "Location to be announced"}
+          </p>
+          <p className="flex items-center gap-2">
+            <CalendarDays className="h-4 w-4 text-blue-600" />
+            {event.start_date || event.date || "Date to be announced"}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => navigate(`/event/${event.id}`)}
+          className="mt-6 inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-600"
+        >
+          View Details
+          <ArrowRight className="h-4 w-4" />
+        </button>
+      </div>
+    </article>
+  );
+}
 
 const API_URL = "https://ticketii.com.ng/ticketii/api/events/all.php";
 
@@ -87,46 +158,7 @@ export default function EventGrid({ limit, showCreateButton = false }) {
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {events.length > 0 ? (
             events.map((event, index) => (
-              <article
-                key={event.id}
-                className="app-panel-light flex h-full flex-col overflow-hidden rounded-[1.75rem] transition duration-300 hover:-translate-y-1"
-              >
-                <div className="h-48 bg-gradient-to-br from-slate-900 via-blue-950 to-sky-900 p-5 text-white">
-                  <div className="flex h-full flex-col justify-between">
-                    <span className="w-fit rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-sky-100">
-                      {event.status || "Active"}
-                    </span>
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.28em] text-slate-300">Featured event</p>
-                      <h3 className="font-display mt-3 text-2xl font-semibold leading-tight">
-                        {event.title || event.eventName || `Event ${index + 1}`}
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-1 flex-col p-5">
-                  <div className="space-y-3 text-sm text-slate-600">
-                    <p className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-blue-600" />
-                      {event.location || "Location to be announced"}
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <CalendarDays className="h-4 w-4 text-blue-600" />
-                      {event.start_date || event.date || "Date to be announced"}
-                    </p>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => navigate(`/event/${event.id}`)}
-                    className="mt-6 inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-600"
-                  >
-                    View Details
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                </div>
-              </article>
+              <EventCard key={event.id} event={event} index={index} />
             ))
           ) : (
             <div className="app-panel-light col-span-full rounded-[2rem] px-6 py-16 text-center">

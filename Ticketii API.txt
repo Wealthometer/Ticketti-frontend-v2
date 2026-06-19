@@ -1,0 +1,230 @@
+📘 TICKETII API CONTRACT (v1)
+🔐 AUTH
+1. Register
+Http
+POST /api/auth/register.php
+Request
+JSON
+{
+  "name": "John Doe",
+  "email": "john@mail.com",
+  "password": "123456"
+}
+Response
+JSON
+{
+  "success": true,
+  "message": "Registration successful",
+  "token": "JWT_TOKEN",
+  "user": {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john@mail.com"
+  }
+}
+2. Login
+Http
+POST /api/auth/login.php
+Request
+JSON
+{
+  "email": "john@mail.com",
+  "password": "123456"
+}
+Response
+JSON
+{
+  "success": "Login successful",
+  "token": "JWT_TOKEN",
+  "user": {
+    "id": 1,
+    "fullname": "John Doe",
+    "email": "john@mail.com",
+    "role": "user"
+  }
+}
+3. Send OTP
+Http
+POST /api/auth/send_otp.php
+Request
+JSON
+{
+  "email": "john@mail.com",
+  "type": "login"
+}
+4. Verify OTP
+Http
+POST /api/auth/verify_otp.php
+Request
+JSON
+{
+  "email": "john@mail.com",
+  "otp": "123456",
+  "type": "login"
+}
+Response
+JSON
+{
+  "success": "Login successful",
+  "token": "JWT_TOKEN"
+}
+5. Google Auth
+Http
+POST /api/auth/google_login.php
+Request
+JSON
+{
+  "token": "GOOGLE_ID_TOKEN"
+}
+Response
+JSON
+{
+  "success": true,
+  "token": "JWT_TOKEN",
+  "user": {
+    "id": 1,
+    "email": "john@mail.com",
+    "name": "John Doe"
+  }
+}
+6. Forgot Password
+Http
+POST /api/auth/forgot_password.php
+Request
+JSON
+{
+  "email": "john@mail.com"
+}
+7. Reset Password
+Http
+POST /api/auth/update_password.php
+Request
+JSON
+{
+  "token": "RESET_TOKEN",
+  "password": "newpassword"
+}
+🎟 EVENTS
+Create Event
+Http
+POST /api/events/create.php
+Headers
+Plain text
+Authorization: Bearer TOKEN
+Request
+JSON
+{
+  "title": "Concert",
+  "description": "Live show",
+  "price": 5000,
+  "date": "2026-05-01"
+}
+My Events
+Http
+GET /api/events/my-events.php
+All Events
+Http
+GET /api/events/all.php
+🎫 BOOKINGS / TICKETS
+Book Ticket
+Http
+POST /api/bookings/create.php
+Request
+JSON
+{
+  "event_id": 5,
+  "quantity": 2
+}
+My Tickets
+Http
+GET /api/tickets/my.php
+💰 WALLET
+Withdraw (STEP 1 - LOCK FUNDS)
+Http
+POST /api/organizer/wallet_withdraw.php
+Request
+JSON
+{
+  "amount": 5000
+}
+Response
+JSON
+{
+  "success": true,
+  "withdrawal_id": 12,
+  "amount": 5000
+}
+Transactions
+Http
+GET /api/organizer/transactions.php
+Earnings Summary
+Http
+GET /api/organizer/earnings.php
+🔁 REFUNDS
+Refund Booking
+Http
+POST /api/organizer/refund_booking.php
+Request
+JSON
+{
+  "booking_id": 10
+}
+📊 DASHBOARD
+Organizer Dashboard
+Http
+GET /api/organizer/dashboard.php
+Response
+JSON
+{
+  "total_revenue": 20000,
+  "available_balance": 10000,
+  "pending_balance": 5000,
+  "tickets_sold": 120,
+  "total_events": 4,
+  "recent_payouts": []
+}
+Revenue Chart
+Http
+GET /api/organizer/revenue_charts.php?days=7
+Event Performance
+Http
+GET /api/organizer/event_performance.php
+🛠 ADMIN
+Finance Overview
+Http
+GET /api/admin/finance.php
+Revenue Stats
+Http
+GET /api/admin/revenue_stats.php?days=7
+Process Withdrawal
+Http
+POST /api/admin/process_withdrawal.php
+Request
+JSON
+{
+  "withdrawal_id": 5,
+  "action": "approve"
+}
+⚠️ GLOBAL RULES (IMPORTANT)
+1. Authentication
+Plain text
+All protected routes require:
+Authorization: Bearer TOKEN
+2. Content-Type
+Plain text
+Content-Type: application/json
+Accept: application/json
+3. Error Format
+JSON
+{
+  "success": false,
+  "message": "Error message"
+}
+4. Rate Limits
+Plain text
+Max 5 requests per minute (auth endpoints)
+5. Currency
+Plain text
+All amounts in NAIRA (NGN)
+
+Use ONLY this. If it’s not here, don’t call it.

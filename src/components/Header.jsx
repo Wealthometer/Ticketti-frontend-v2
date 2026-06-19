@@ -43,10 +43,10 @@ export default function Header() {
             <div className="flex h-12 w-24 items-center justify-center overflow-hidden">
               <img src={logo} alt="Ticketii" className="h-full w-auto object-contain" />
             </div>
-            <div>
+            {/* <div>
               <p className="font-display text-lg font-semibold tracking-tight text-white">Ticketii</p>
               <p className="text-xs text-slate-400">Modern event ticketing</p>
-            </div>
+            </div> */}
           </Link>
 
         <div className="hidden items-center gap-8 md:flex">

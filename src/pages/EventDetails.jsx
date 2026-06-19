@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CalendarDays, MapPin, Ticket, Coins } from "lucide-react";
 import { createBooking, getEventDetails, getTicketTypes, initiatePayment } from "../services/api";
+import { getEventImageUrl, getEventPlaceholderUrl } from "../utils/image.js";
 
 const EventDetails = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const EventDetails = () => {
   const [guestName, setGuestName] = useState("");
   const [guestEmail, setGuestEmail] = useState("");
   const [error, setError] = useState("");
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -30,6 +32,11 @@ const EventDetails = () => {
         // Handle different possible response structures
         const extractedEvent = eventData.data || eventData.event || eventData;
 
+        // Reset image error state when loading a new event
+        setImageError(false);
+
+        const rawImage = extractedEvent.image || extractedEvent.cover || extractedEvent.banner || extractedEvent.image_url;
+
         // Normalize fields (bridge gap between list view and details view models)
         const normalizedEvent = {
           ...extractedEvent,
@@ -40,7 +47,7 @@ const EventDetails = () => {
           ticketPrice: extractedEvent.ticketPrice || extractedEvent.price || 0,
           totalTickets: extractedEvent.totalTickets || extractedEvent.capacity || 0,
           description: extractedEvent.description || "No description available.",
-          image: extractedEvent.image || extractedEvent.cover || extractedEvent.banner || extractedEvent.image_url || "",
+          image: getEventImageUrl(rawImage),
         };
 
         setEvent(normalizedEvent);
@@ -223,16 +230,19 @@ const EventDetails = () => {
 
         {/* Event Details */}
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          {event.image ? (
+          {event.image && !imageError ? (
             <img
               src={event.image}
               alt={event.eventName}
               className="w-full h-64 md:h-80 object-cover"
+              onError={() => setImageError(true)}
             />
           ) : (
-            <div className="w-full h-64 md:h-80 bg-gray-200 flex items-center justify-center text-gray-500">
-              <span className="text-lg">No event image available</span>
-            </div>
+            <img
+              src={getEventPlaceholderUrl(eventId)}
+              alt="Event Banner"
+              className="w-full h-64 md:h-80 object-cover opacity-90"
+            />
           )}
 
           <div className="p-6 md:p-8">

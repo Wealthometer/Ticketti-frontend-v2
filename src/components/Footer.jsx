@@ -1,6 +1,7 @@
 import React from "react";
-import { Instagram, Mail, MapPin } from "lucide-react";
+import {   Mail, MapPin } from "lucide-react";
 import logo from "../assets/logo.png";
+import { FaInstagram } from "react-icons/fa";
 
 const companyLinks = [
   { name: "About", href: "/" },
@@ -23,10 +24,10 @@ export default function Footer() {
             <div className="flex h-20 w-20 items-center justify-center overflow-hidden">
               <img src={logo} alt="Ticketii" className="h-full w-auto object-contain" />
             </div>
-            <div>
+            {/* <div>
               <p className="font-display text-lg font-semibold text-white">Ticketii</p>
               <p className="text-sm text-slate-400">Simple, modern event ticketing</p>
-            </div>
+            </div> */}
           </div>
 
           <p className="mt-5 max-w-xl text-base leading-7 text-slate-400">
@@ -74,7 +75,8 @@ export default function Footer() {
               href="https://www.instagram.com/p/DTNTmvRDA5G/"
               className="mt-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-300 transition hover:text-white"
             >
-              <Instagram className="h-5 w-5" />
+              
+              <FaInstagram   className="h-5 w-5" />
             </a>
           </div>
         </div>

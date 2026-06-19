@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginStep1 } from "../services/api";
 import { getDefaultRouteForUser } from "../utils/auth";
+import { Mail, Lock } from "lucide-react";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -17,27 +18,37 @@ export default function SignIn() {
     }
   }, [navigate]);
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (cooldown) return;
+
     setLoading(true);
     setError("");
+
     try {
       await loginStep1(form.email, form.password);
-      // OTP sent — navigate to verify page with context
-      navigate("/verify-otp", { state: { email: form.email, type: "login", redirect: "/dashboard" } });
+
+      navigate("/verify-otp", {
+        state: {
+          email: form.email,
+          type: "login",
+          redirect: "/dashboard",
+        },
+      });
     } catch (err) {
       const msg = err.message || "";
+
       if (msg.includes("wait") || msg.includes("cooldown")) {
         setCooldown(true);
         setError("Too many attempts. Please wait before retrying.");
         setTimeout(() => setCooldown(false), 30000);
       } else if (msg.includes("restricted")) {
-        setError("Your account is temporarily restricted. Contact support.");
+        setError("Account temporarily restricted. Contact support.");
       } else if (msg.includes("blocked") || msg.includes("Access denied")) {
-        setError("Access denied. Please contact support.");
+        setError("Access denied. Contact support.");
       } else {
         setError(msg || "Invalid email or password.");
       }
@@ -47,92 +58,136 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#0a0a0f]">
-      {/* Left panel */}
+    <div className="min-h-screen flex bg-slate-950 text-white">
+
+      {/* LEFT VISUAL PANEL */}
       <div className="hidden lg:flex w-1/2 relative overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=80"
-          alt="Event"
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-900/80 via-purple-900/60 to-transparent" />
-        <div className="relative z-10 flex flex-col justify-end p-12 pb-16">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 rounded-full px-4 py-2 mb-8 w-fit">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-white/80 text-sm font-medium">Live events near you</span>
+
+        {/* Background */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.15),transparent_60%)]" />
+
+        {/* Content */}
+        <div className="relative z-10 flex flex-col justify-end p-16">
+
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/10 px-4 py-2 text-xs text-sky-200 w-fit">
+            <span className="h-2 w-2 rounded-full bg-sky-400 animate-pulse" />
+            Live events platform
           </div>
-          <h2 className="text-5xl font-black text-white leading-tight mb-4" style={{ fontFamily: "'Syne', sans-serif" }}>
-            Your ticket<br />to everything.
+
+          <h2 className="text-5xl font-bold leading-tight">
+            Your ticket to everything
           </h2>
-          <p className="text-white/60 text-lg max-w-xs">
-            Discover, book, and manage events all in one place.
+
+          <p className="mt-4 text-slate-400 max-w-sm">
+            Discover events, book tickets, and manage experiences in one place.
           </p>
+
         </div>
       </div>
 
-      {/* Right panel */}
-      <div className="flex-1 flex items-center justify-center p-8">
+      {/* RIGHT FORM PANEL */}
+      <div className="flex-1 flex items-center justify-center px-6 py-12">
+
         <div className="w-full max-w-md">
-          {/* Logo */}
+
+          {/* LOGO */}
           <div className="flex items-center gap-3 mb-10">
-            <div className="w-9 h-9 rounded-xl bg-violet-600 flex items-center justify-center">
-              <span className="text-white font-black text-sm">T</span>
+            <div className="w-10 h-10 rounded-2xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center">
+              <span className="text-sky-300 font-bold">T</span>
             </div>
-            <span className="text-white text-xl font-bold tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Ticketii</span>
+            <span className="text-xl font-bold">Ticketii</span>
           </div>
 
-          <h1 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Welcome back</h1>
-          <p className="text-white/40 mb-8 text-sm">Enter your credentials to continue. An OTP will be sent to verify your login.</p>
+          {/* HEADER */}
+          <h1 className="text-3xl font-bold">Welcome back</h1>
+          <p className="text-slate-400 mt-2 text-sm">
+            Enter your details to continue. OTP will be sent to your email.
+          </p>
 
+          {/* ERROR */}
           {error && (
-            <div className="mb-5 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-start gap-2">
-              <span className="mt-0.5">⚠</span> <span>{error}</span>
+            <div className="mt-6 px-4 py-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-300 text-sm">
+              {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          {/* FORM */}
+          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+
+            {/* EMAIL */}
             <div>
-              <label className="block text-xs font-semibold text-white/50 uppercase tracking-widest mb-2">Email</label>
-              <input
-                type="email" name="email" value={form.email} onChange={handleChange} required
-                placeholder="you@example.com"
-                className="w-full bg-white/5 border border-white/10 text-white rounded-xl px-4 py-3 text-sm placeholder-white/20 focus:outline-none focus:border-violet-500 focus:bg-white/8 transition"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-white/50 uppercase tracking-widest mb-2">Password</label>
-              <input
-                type="password" name="password" value={form.password} onChange={handleChange} required
-                placeholder="••••••••"
-                className="w-full bg-white/5 border border-white/10 text-white rounded-xl px-4 py-3 text-sm placeholder-white/20 focus:outline-none focus:border-violet-500 focus:bg-white/8 transition"
-              />
-              <div className="flex justify-end mt-2">
-                <Link to="/forgot-password" className="text-xs text-violet-400 hover:text-violet-300 transition">Forgot password?</Link>
+              <label className="text-xs text-slate-400">Email</label>
+              <div className="mt-2 relative">
+                <Mail className="absolute left-3 top-3.5 h-4 w-4 text-slate-500" />
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="you@example.com"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-sky-400 outline-none text-white"
+                  required
+                />
               </div>
             </div>
 
+            {/* PASSWORD */}
+            <div>
+              <label className="text-xs text-slate-400">Password</label>
+              <div className="mt-2 relative">
+                <Lock className="absolute left-3 top-3.5 h-4 w-4 text-slate-500" />
+                <input
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-sky-400 outline-none text-white"
+                  required
+                />
+              </div>
+
+              <div className="flex justify-end mt-2">
+                <Link
+                  to="/forgot-password"
+                  className="text-xs text-sky-400 hover:text-sky-300"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            </div>
+
+            {/* BUTTON */}
             <button
-              type="submit" disabled={loading || cooldown}
-              className="w-full py-3.5 bg-violet-600 hover:bg-violet-500 disabled:bg-violet-900 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition text-sm mt-2"
+              type="submit"
+              disabled={loading || cooldown}
+              className="w-full mt-2 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-semibold transition disabled:opacity-50"
             >
-              {loading ? "Sending OTP..." : cooldown ? "Please wait..." : "Continue →"}
+              {loading
+                ? "Sending OTP..."
+                : cooldown
+                ? "Please wait..."
+                : "Continue"}
             </button>
           </form>
 
-          <p className="text-center text-white/30 text-sm mt-8">
+          {/* FOOTER LINKS */}
+          <p className="text-center text-sm text-slate-400 mt-8">
             Don't have an account?{" "}
-            <Link to="/signup" className="text-violet-400 hover:text-violet-300 font-medium transition">Sign up</Link>
+            <Link to="/signup" className="text-sky-400 hover:text-sky-300">
+              Sign up
+            </Link>
           </p>
-          <p className="text-center text-white/30 text-sm mt-3">
+
+          <p className="text-center text-sm text-slate-500 mt-3">
             Admin access?{" "}
-            <Link to="/admin-login" className="text-red-400 hover:text-red-300 font-medium transition">
+            <Link to="/admin-login" className="text-red-400 hover:text-red-300">
               Use admin login
             </Link>
           </p>
+
         </div>
       </div>
-
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&display=swap');`}</style>
     </div>
   );
 }
