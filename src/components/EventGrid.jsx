@@ -73,7 +73,7 @@ function EventCard({ event, index }) {
   );
 }
 
-const API_URL = "https://ticketii.com.ng/ticketii/api/events/all.php";
+const API_URL = "https://ticketii.com.ng/ticketii/api/events/all";
 
 export default function EventGrid({ limit, showCreateButton = false }) {
   const navigate = useNavigate();
