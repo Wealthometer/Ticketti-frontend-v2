@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CalendarDays, MapPin, Ticket, Coins } from "lucide-react";
-import { createBooking, getEventDetails, getTicketTypes, initiatePayment } from "../services/api";
+import { createBooking, getEventDetails, getTicketTypes } from "../services/api";
 import { getEventImageUrl, getEventPlaceholderUrl } from "../utils/image.js";
 
 const EventDetails = () => {
@@ -122,9 +122,6 @@ const EventDetails = () => {
       }
 
       const finalEmail = user?.email || guestEmail;
-      const finalName = user?.name || user?.username || guestName || "Guest";
-      const authenticatedUserId =
-        user?.id || user?.user_id || user?.data?.id || user?.data?.user_id;
 
       if (!finalEmail) {
         throw new Error("Please provide an email address for the ticket delivery");
@@ -134,19 +131,11 @@ const EventDetails = () => {
         throw new Error("Please provide your full name to continue");
       }
 
-      // Payload for Create Booking
       const payload = {
         event_id: Number(eventId),
-        guest_name: finalName,
-        guest_email: finalEmail,
-        ...(authenticatedUserId ? { user_id: Number(authenticatedUserId) } : {}),
-        items: [
-          {
-            ticket_type_id: Number(selectedTicketType.id),
-            quantity: Number(quantity)
-          }
-        ]
+        quantity: Number(quantity),
       };
+
       const bookingResponse = await createBooking(payload);
 
       if (bookingResponse.success) {
@@ -162,25 +151,14 @@ const EventDetails = () => {
           throw new Error("Booking was created but no booking ID was returned.");
         }
 
-        const callbackUrl =
-          window.location.hostname === "localhost"
-            ? "http://localhost:5173/payment-success"
-            : `${window.location.origin}${import.meta.env.BASE_URL}payment-success`;
-        const paymentResponse = await initiatePayment(bookingId, callbackUrl);
-
-        if (!paymentResponse.success) {
-          throw new Error(paymentResponse.message || "Payment initialization failed");
-        }
-
-        if (paymentResponse.reference) {
-          localStorage.setItem("payment_reference", paymentResponse.reference);
-        }
-
-        if (paymentResponse.authorization_url) {
-          window.location.href = paymentResponse.authorization_url;
-        } else {
-          throw new Error("Payment was initialized but no authorization URL was returned.");
-        }
+        localStorage.setItem("recent_booking_id", String(bookingId));
+        navigate("/payment-success", {
+          state: {
+            bookingId,
+            eventName: event.eventName,
+            quantity,
+          },
+        });
       } else {
         setError(bookingResponse.message || "Failed to create booking");
       }

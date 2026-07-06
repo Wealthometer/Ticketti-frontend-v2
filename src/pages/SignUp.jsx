@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { registerUser } from "../services/api";
+import { googleAuth, registerUser } from "../services/api";
+import { getGoogleIdToken } from "../utils/googleIdentity";
 import { Mail, Lock, User } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -22,7 +24,17 @@ export default function SignUp() {
     setError("");
 
     try {
-      await registerUser(form.name, form.email, form.password);
+      const response = await registerUser(form.name, form.email, form.password);
+      const token = response?.token || response?.data?.token;
+      const user = response?.user || response?.data?.user;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user || { name: form.name, email: form.email }));
+        navigate("/dashboard");
+        return;
+      }
+
       navigate("/verify-otp", {
         state: {
           email: form.email,
@@ -32,6 +44,36 @@ export default function SignUp() {
       });
     } catch (err) {
       setError(err.message || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignup = async () => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (!clientId) {
+      setError("Missing Google client ID. Set VITE_GOOGLE_CLIENT_ID in your environment.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const googleToken = await getGoogleIdToken(clientId);
+      const response = await googleAuth(googleToken.trim());
+      const token = response?.token || response?.data?.token;
+      const user = response?.user || response?.data?.user;
+
+      if (!token) {
+        throw new Error("Google signup succeeded but no token was returned.");
+      }
+
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user || {}));
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.message || "Google signup failed.");
     } finally {
       setLoading(false);
     }
@@ -127,6 +169,16 @@ export default function SignUp() {
               className="w-full mt-2 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-semibold transition disabled:opacity-50"
             >
               {loading ? "Creating account..." : "Create Account"}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleGoogleSignup}
+              disabled={loading}
+              className="w-full py-3 rounded-xl border border-white/10 bg-white/5 text-white font-semibold transition hover:bg-white/10 disabled:opacity-50 inline-flex items-center justify-center gap-2"
+            >
+              <FcGoogle  className="h-4 w-4" />
+              Continue with Google
             </button>
 
             {/* Login */}

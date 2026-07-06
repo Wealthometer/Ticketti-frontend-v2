@@ -51,32 +51,19 @@ export default function CreateEvent() {
     setSuccess("");
     setLoading(true);
 
-    const start_date = `${formData.date} ${formData.time}:00`;
-    const end_date = `${formData.date} ${formData.endTime}:00`;
-
     try {
       const eventPayload = {
         title: formData.title,
         description: formData.description,
-        location: formData.location,
-        start_date,
-        end_date,
-        status: "published",
+        price: 0,
+        date: formData.date,
       };
 
-      const payload = formData.image
-        ? (() => {
-            const data = new FormData();
-            Object.entries(eventPayload).forEach(([key, value]) => {
-              data.append(key, value);
-            });
-            data.append("image", formData.image);
-            return data;
-          })()
-        : eventPayload;
-
-      const data = await createEvent(payload);
+      const data = await createEvent(eventPayload);
       setSuccess("Event created successfully. Add ticket types below.");
+      const localImage = formData.image
+        ? URL.createObjectURL(formData.image)
+        : "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80";
 
       const newEvent = {
         ...formData,
@@ -84,9 +71,7 @@ export default function CreateEvent() {
         eventName: formData.title,
         ticketPrice: 0,
         totalTickets: 0,
-        image:
-          data.event?.image ||
-          "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80",
+        image: data.event?.image || localImage,
         description: formData.description,
         location: formData.location,
         date: formData.date,

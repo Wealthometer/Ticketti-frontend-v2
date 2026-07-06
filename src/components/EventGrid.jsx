@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
+import { fetchAllEvents } from "../services/api";
 import { getEventImageUrl, getEventPlaceholderUrl } from "../utils/image.js";
 
 function EventCard({ event, index }) {
@@ -73,8 +74,6 @@ function EventCard({ event, index }) {
   );
 }
 
-const API_URL = "https://ticketii.com.ng/ticketii/api/events/all";
-
 export default function EventGrid({ limit, showCreateButton = false }) {
   const navigate = useNavigate();
   const [events, setEvents] = useState([]);
@@ -87,19 +86,8 @@ export default function EventGrid({ limit, showCreateButton = false }) {
     setError("");
 
     try {
-      const response = await fetch(API_URL, {
-        method: "GET",
-        headers: { Accept: "application/json" },
-      });
-
-      const rawText = await response.text();
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const json = JSON.parse(rawText);
-      let eventList = Array.isArray(json?.data?.events) ? json.data.events : [];
+      const data = await fetchAllEvents();
+      let eventList = Array.isArray(data) ? data : data?.events || data?.data?.events || [];
 
       if (limit) {
         eventList = eventList.slice(0, limit);

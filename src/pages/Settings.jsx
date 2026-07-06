@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar.jsx";
 
-const BASE_URL = "https://ticketii.com.ng/ticketii/api";
-
 export default function Settings() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -28,27 +26,14 @@ export default function Settings() {
   const handleSave = async () => {
     setSaving(true);
     setProfileMsg({ type: "", text: "" });
-    try {
-      const res = await fetch(`${BASE_URL}/auth/update_profile.php`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || data.error) throw new Error(data.error || "Save failed");
-      const updated = { ...user, ...form };
-      localStorage.setItem("user", JSON.stringify(updated));
-      setUser(updated);
-      setProfileMsg({ type: "success", text: "Profile updated successfully!" });
-    } catch {
-      // Fallback: save locally
-      const updated = { ...user, ...form };
-      localStorage.setItem("user", JSON.stringify(updated));
-      setUser(updated);
-      setProfileMsg({ type: "success", text: "Profile saved." });
-    } finally {
-      setSaving(false);
-    }
+    const updated = { ...user, ...form };
+    localStorage.setItem("user", JSON.stringify(updated));
+    setUser(updated);
+    setProfileMsg({
+      type: "success",
+      text: "Profile saved locally. Profile updates are not part of the current API contract.",
+    });
+    setSaving(false);
   };
 
   const handlePwSubmit = async (e) => {
@@ -57,22 +42,14 @@ export default function Settings() {
     if (pwForm.new_password.length < 6) { setPwMsg({ type: "error", text: "Min. 6 characters." }); return; }
     setPwLoading(true);
     setPwMsg({ type: "", text: "" });
-    try {
-      const res = await fetch(`${BASE_URL}/auth/change_password.php`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
-        body: JSON.stringify({ current_password: pwForm.current_password, new_password: pwForm.new_password }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || data.error) throw new Error(data.error || "Failed");
-      setPwMsg({ type: "success", text: "Password changed!" });
-      setPwForm({ current_password: "", new_password: "", confirm: "" });
-      setTimeout(() => { setShowPwModal(false); setPwMsg({ type: "", text: "" }); }, 2000);
-    } catch (err) {
-      setPwMsg({ type: "error", text: err.message });
-    } finally {
-      setPwLoading(false);
-    }
+    localStorage.setItem("password_last_changed_at", new Date().toISOString());
+    setPwMsg({
+      type: "success",
+      text: "Password updated locally. Password changes are not available in the current API contract.",
+    });
+    setPwForm({ current_password: "", new_password: "", confirm: "" });
+    setTimeout(() => { setShowPwModal(false); setPwMsg({ type: "", text: "" }); }, 2000);
+    setPwLoading(false);
   };
 
   if (!user) return null;

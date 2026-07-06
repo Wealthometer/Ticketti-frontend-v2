@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { verifyOTP, completeLogin, resendOTP } from "../services/api";
+import { verifyOTP, resendOTP } from "../services/api";
 import { getDefaultRouteForUser } from "../utils/auth";
 
 export default function OTPVerify() {
@@ -61,15 +61,13 @@ export default function OTPVerify() {
     setLoading(true);
     setError("");
     try {
-      await verifyOTP(email, code, type);
+      const response = await verifyOTP(email, code, type);
+      const token = response?.token || response?.data?.token;
+      const userData = response?.user || response?.data?.user;
 
       if (type === "login") {
-        const data = await completeLogin(email);
-        const token = data.token || data.data?.token || data?.data?.data?.token;
-        const userData = data.user || data.data?.user || data?.data?.data?.user;
-
         if (!token) {
-          throw new Error("Login succeeded but authentication token was not returned.");
+          throw new Error("Login succeeded but no token was returned.");
         }
 
         localStorage.setItem("token", token);
@@ -80,8 +78,7 @@ export default function OTPVerify() {
         setSuccess("Email verified! You can now sign in.");
         setTimeout(() => navigate("/signin"), 2000);
       } else if (type === "forgot_password") {
-        // Pass email along so reset page can use it
-        navigate("/reset-password", { state: { email, token: code } });
+        navigate("/reset-password", { state: { email, token: token || code } });
       }
     } catch (err) {
       setError(err.message || "Invalid OTP. Please try again.");
