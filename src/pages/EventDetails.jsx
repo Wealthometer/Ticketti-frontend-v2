@@ -4,6 +4,25 @@ import { CalendarDays, MapPin, Ticket, Coins } from "lucide-react";
 import { createBooking, getEventDetails, getTicketTypes } from "../services/api";
 import { getEventImageUrl, getEventPlaceholderUrl } from "../utils/image.js";
 
+const SERVICE_FEE_PERCENT = 0.05;
+const FLAT_PROCESSING_FEE = 100;
+
+const formatNaira = (amount) =>
+  `\u20A6${Math.round(Number(amount || 0)).toLocaleString()}`;
+
+const getPriceBreakdown = (price, quantity) => {
+  const subtotal = Number(price || 0) * Number(quantity || 0);
+  const serviceFee = subtotal * SERVICE_FEE_PERCENT;
+  const processingFee = FLAT_PROCESSING_FEE;
+
+  return {
+    subtotal,
+    serviceFee,
+    processingFee,
+    total: subtotal + serviceFee + processingFee,
+  };
+};
+
 const EventDetails = () => {
   const navigate = useNavigate();
   const { eventId } = useParams();
@@ -195,6 +214,10 @@ const EventDetails = () => {
     );
   }
 
+  const priceBreakdown = selectedTicketType
+    ? getPriceBreakdown(selectedTicketType.price, quantity)
+    : null;
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="max-w-4xl mx-auto p-4 md:p-8">
@@ -319,7 +342,7 @@ const EventDetails = () => {
                     >
                       {ticketTypes.map(type => (
                         <option key={type.id} value={type.id}>
-                          {type.name} - ₦{Number(type.price).toLocaleString()}
+                          {type.name} - {formatNaira(type.price)}
                         </option>
                       ))}
                     </select>
@@ -345,17 +368,19 @@ const EventDetails = () => {
                 </div>
 
                 <div className="min-w-0 rounded-2xl border border-gray-200 bg-slate-50 p-5">
-                  {selectedTicketType ? (
+                  {priceBreakdown ? (
                     <>
                       <p className="text-lg font-semibold text-gray-900">
-                        Subtotal: ₦{(selectedTicketType.price * quantity).toLocaleString()}
+                        Subtotal: {formatNaira(priceBreakdown.subtotal)}
                       </p>
-                      <p className="text-sm text-gray-500 mb-4">
-                        Total (inc. fees): ₦{(
-                          selectedTicketType.price * quantity +
-                          0.05 * (selectedTicketType.price * quantity) +
-                          100 * quantity
-                        ).toLocaleString()}
+                      <p className="text-sm text-gray-500">
+                        Service fee (5%): {formatNaira(priceBreakdown.serviceFee)}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Processing fee: {formatNaira(priceBreakdown.processingFee)}
+                      </p>
+                      <p className="text-sm font-semibold text-gray-700 mb-4">
+                        Total (inc. fees): {formatNaira(priceBreakdown.total)}
                       </p>
                     </>
                   ) : (

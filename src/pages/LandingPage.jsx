@@ -6,12 +6,14 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import HowItWorks from "../components/HowItWorks";
+import PricingBreakdown from "../components/PricingBreakdown";
 
 export default function LandingPage() {
   return (
     <div>
       <Header />
       <Hero />
+      <PricingBreakdown />
 
       <section className="bg-[#f4f7fb] px-4 py-20 text-slate-900 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
