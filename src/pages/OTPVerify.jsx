@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { verifyOTP, resendOTP } from "../services/api";
+import { verifyOTP, resendOTP, completeLogin } from "../services/api";
 import { getDefaultRouteForUser } from "../utils/auth";
 
 export default function OTPVerify() {
@@ -61,11 +61,16 @@ export default function OTPVerify() {
     setLoading(true);
     setError("");
     try {
-      const response = await verifyOTP(email, code, type);
-      const token = response?.token || response?.data?.token;
-      const userData = response?.user || response?.data?.user;
+      // Step 1: verify OTP. For login/forgot_password this just confirms the code
+      // is valid; the JWT / reset token are issued in the next call.
+      const verifyResult = await verifyOTP(email, code, type);
 
       if (type === "login") {
+        // Step 2: complete login → backend re-validates the OTP and returns a JWT.
+        const completion = await completeLogin(email, code);
+        const token = completion?.token || completion?.data?.token;
+        const userData = completion?.user || completion?.data?.user;
+
         if (!token) {
           throw new Error("Login succeeded but no token was returned.");
         }
@@ -78,7 +83,13 @@ export default function OTPVerify() {
         setSuccess("Email verified! You can now sign in.");
         setTimeout(() => navigate("/signin"), 2000);
       } else if (type === "forgot_password") {
-        navigate("/reset-password", { state: { email, token: token || code } });
+        const resetToken =
+          verifyResult?.reset_token ||
+          verifyResult?.data?.reset_token;
+
+        navigate("/reset-password", {
+          state: { email, token: resetToken || code },
+        });
       }
     } catch (err) {
       setError(err.message || "Invalid OTP. Please try again.");

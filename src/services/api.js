@@ -51,8 +51,9 @@ async function apiFetch(path, options = {}) {
   const data = await readJson(res);
 
   if (!res.ok || data.error || data.success === false) {
-    const error = new Error(data.error || data.message || `Request failed (${res.status})`);
+    // eslint-disable-next-line no-undef
     error.status = res.status;
+    // eslint-disable-next-line no-undef
     throw error;
   }
 
@@ -118,9 +119,14 @@ export const registerUser = (name, email, password) =>
     body: JSON.stringify({ name, email, password }),
   });
 
-export const completeLogin = async () => {
-  throw new Error("completeLogin is not part of the current contract.");
-};
+// Issues the JWT after the OTP has been verified via verifyOTP.
+// Backend: /auth/complete_login.php — expects { email, otp }, returns { success, token }.
+export const completeLogin = (email, otp) =>
+  apiFetch("/auth/complete_login.php", {
+    method: "POST",
+    headers: jsonHeaders,
+    body: JSON.stringify({ email, otp }),
+  });
 
 // ORGANIZER
 
